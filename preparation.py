@@ -1,0 +1,36 @@
+def loadAndRefreshCSV(csv):
+    f = open(csv, "r")
+    raw_lines = f.readlines()
+    f.close()
+    lines = [raw_lines.replace("\n", "") for raw_lines in raw_lines]
+
+    array_of_data = []
+    for line in lines:
+        split_value = []
+        tmp = ''
+        for c in line:
+            if c == ';':
+                split_value.append(tmp)
+                tmp = ''
+            else:
+                tmp += c
+        if tmp:
+            split_value.append(tmp)
+        array_of_data.append(split_value)
+    return array_of_data 
+
+def writeUserToUserData(nama_register, username_register, password_register, alamat_register, array_of_user):
+    array_of_user.append([str(len(array_of_user)), nama_register, username_register, password_register, alamat_register])
+    string_data = convertArrayToString(array_of_user)
+
+    f = open("user.csv", "w")
+    f.write(string_data)
+    f.close()
+
+def convertArrayToString(array_of_data):
+    string_data = ""
+    for array in array_of_data:
+        arr_data_all_string = [str(var) for var in array]
+        string_data += ";".join(arr_data_all_string)
+        string_data += "\n"
+    return string_data
