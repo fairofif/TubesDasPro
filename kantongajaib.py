@@ -1,7 +1,6 @@
 import preparation
 import session
 import function
-import preparation
 
 ### kantongajaib.py berfungsi sebagain "MAIN SESSION" dalam program ini
 
