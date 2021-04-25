@@ -58,3 +58,64 @@ def loginUser():
     pass_user = str(input("Password: "))
     return uname_user, pass_user
 
+def idItemIsValid(id):
+    first_char = False
+    if id[0] == 'C' or id[0] == 'G':
+        first_char = True
+
+    next_char = False
+    n = len(id)
+    char_not_valid = 0
+    if n < 2:
+        return False
+    elif int(id[1]) == 0:
+        return False
+    else:
+        for i in range(1,n):
+            if ord(id[i]) < 48 or ord(id[i]) > 57:
+                char_not_valid += 1
+    if char_not_valid == 0:
+        next_char = True
+    
+    if first_char == True and next_char == True:
+        return True
+    else:
+        return False
+
+def idItemIsExist(id, arr1, arr2):
+    count = 0
+    n = len(arr1)
+    for i in range(1,n):
+        if arr1[i][0] == id:
+            count += 1
+    n = len(arr2)
+    for i in range(1,n):
+        if arr2[i][0] == id:
+            count += 1
+    if count == 0:
+        return False
+    else:
+        return True
+
+def addItemForm(arr1,arr2):
+    id = str(input("Masukan ID: "))
+    if idItemIsValid(id) == True:
+        if idItemIsExist(id, arr1, arr2) == False:
+            nama = str(input("Masukan Nama: "))
+            desc = str(input("Masukan Deskripsi: "))
+            jumlah = int(input("Masukan Jumlah: "))
+            rarity = str(input("Masukan Rarity: "))
+            if id[0] == 'G': 
+                tahun = int(input("Masukan Tahun: "))
+                return [id, nama, desc, str(jumlah), rarity, str(tahun)]
+            else:
+                return [id, nama, desc, str(jumlah), rarity]
+        else:
+            print("Gagal menambahkan item karena ID sudah ada")
+            return []
+    else:
+        print("Gagal menambahkan item karena ID tidak valid")
+        return []    
+
+
+

@@ -34,3 +34,17 @@ def convertArrayToString(array_of_data):
         string_data += ";".join(arr_data_all_string)
         string_data += "\n"
     return string_data
+
+def writeItemToData(arr_add, arr1, arr2):
+    if len(arr_add) == 6:
+        arr1.append(arr_add)
+        string_data = convertArrayToString(arr1)
+        f = open("gadget.csv", "w")
+        f.write(string_data)
+        f.close()
+    elif len(arr_add) == 5:
+        arr2.append(arr_add)
+        string_data = convertArrayToString(arr2)
+        f = open("consumable.csv", "w")
+        f.write(string_data)
+        f.close()

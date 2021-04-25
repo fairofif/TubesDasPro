@@ -6,6 +6,7 @@ import function
 
 array_of_user = preparation.loadAndRefreshCSV("user.csv")
 array_of_gadget = preparation.loadAndRefreshCSV("gadget.csv")
+array_of_consumable = preparation.loadAndRefreshCSV("consumable.csv")
 
 session.introSession()
 role = str(input())
@@ -22,7 +23,7 @@ if role == "1":
     print("Log in Berhasil!")
     session.adminSession()
     pilihan = int(input())
-    while pilihan < 1 or pilihan > 3:
+    while pilihan < 1 or pilihan > 4:
         print("Input salah! Ulangi...")
         session.adminSession()
         pilihan = int(input())
@@ -33,10 +34,21 @@ if role == "1":
     elif pilihan == 2:
         rarity = str(input())
         session.findGadgetByRarity(rarity, array_of_gadget)
+        session.findGadgetByRarity(rarity, array_of_consumable)
     elif pilihan == 3:
         year = int(input("Tahun: "))
         operator = str(input("Operator: "))
         session.findGadgetByYear(year, operator, array_of_gadget)
+    elif pilihan == 4:
+        arr_input = function.addItemForm(array_of_gadget, array_of_consumable)
+        preparation.writeItemToData(arr_input, array_of_gadget, array_of_consumable)
+        if len(arr_input) == 6:  # kalo addnya gadget
+            array_of_gadget = preparation.loadAndRefreshCSV("gadget.csv")
+        elif len(arr_input) == 5: # kalo addnya consumable
+            array_of_consumable = preparation.loadAndRefreshCSV("consumable.csv")
+
+
+
 else:
     uname_user, pass_user = function.loginUser()
     while function.loginUserIsTrue(uname_user, pass_user,array_of_user) == False:
@@ -48,6 +60,7 @@ else:
     if pilihan == 1:
         rarity = str(input())
         session.findGadgetByRarity(rarity, array_of_gadget)
+        session.findGadgetByRarity(rarity, array_of_consumable)
     elif pilihan == 2:
         year = int(input("Tahun: "))
         operator = str(input("Operator: "))
