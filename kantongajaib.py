@@ -9,23 +9,16 @@ array_of_user = preparation.loadAndRefreshCSV("user.csv")
 array_of_gadget = preparation.loadAndRefreshCSV("gadget.csv")
 array_of_consumable = preparation.loadAndRefreshCSV("consumable.csv")
 
-# home session (memilih role sebagai admin atau user)
-session.introSession()
-role = str(input())
-while role != '1' and role != '2':
-    print("Input salah! Masukan ulang...(1 atau 2)")
-    session.introSession()
-    role = str(input())
+# log in dan penentuan role berdasarkan username dan pass
+uname_form, password_form = function.loginForm()
+while function.loginIsTrue(uname_form, password_form, array_of_user) == False:
+    print("Username atau password salah!")
+    uname_form, password_form = function.loginForm()
+role, idx = function.decideRoleAndGetIndex(uname_form, array_of_user)
+print("Halo " + array_of_user[idx][1] + "! Selamat Datang di Kantong Ajaib")
 
 # jika role sebagai admin
-if role == "1":
-    uname_admin, pass_admin = function.loginAdmin() ## memanggil fungsi untuk menginput username dan pass admin
-    ## loop untuk mengecek kebenaran username dan pass berdasarkan user.csv
-    while function.loginAdminIsTrue(uname_admin, pass_admin, array_of_user) == False:
-        print("Username atau password_register salah!")
-        uname_admin, pass_admin = function.loginAdmin()
-    print("Log in Berhasil!")
-
+if role == "admin":
     ## sesi admin (memilih aksi yang akan dilakukan)
     session.adminSession()
     pilihan = int(input())
@@ -57,17 +50,9 @@ if role == "1":
             array_of_gadget = preparation.loadAndRefreshCSV("gadget.csv")
         elif len(arr_input) == 5: # kalo addnya consumable
             array_of_consumable = preparation.loadAndRefreshCSV("consumable.csv")
-
-
+            
 # role sebagai user
 else:
-    uname_user, pass_user = function.loginUser()
-    ## loop untuk mengecek dan membenarkan username dan pass inputan user
-    while function.loginUserIsTrue(uname_user, pass_user,array_of_user) == False:   # jika username dan pass salah
-        print("Username atau password_register salah!")
-        uname_user, pass_user = function.loginUser()
-    print("Log in Berhasil!")
-
     ## user session (memilih aksi)
     session.userSession()
     pilihan = int(input())          ## =========================== BELUM DITAMBAHIN ERROR CASE ##===========================

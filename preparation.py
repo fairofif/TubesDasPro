@@ -20,7 +20,7 @@ def loadAndRefreshCSV(csv):
     return array_of_data 
 
 def writeUserToUserData(nama_register, username_register, password_register, alamat_register, array_of_user):
-    array_of_user.append([str(len(array_of_user)), nama_register, username_register, password_register, alamat_register])
+    array_of_user.append([str(len(array_of_user)), username_register, nama_register, alamat_register, password_register, "user"])
     string_data = convertArrayToString(array_of_user)
 
     f = open("user.csv", "w")

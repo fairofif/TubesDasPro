@@ -1,6 +1,3 @@
-def introSession():
-    print("Pilih role:\n1. Admin\n2. User")
-
 def adminSession():
     print("1. Daftarkan User\n2. Cari Item Berdasarkan Rarity\n3. Cari Item Berdasarkan Tahun")
 

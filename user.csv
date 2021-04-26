@@ -1,8 +1,9 @@
-id;nama;username;password;alamat
-1;admin1;admin1;adminkasep;-
-2;admin2;admin2;admingeulis;-
-3;Thachalla;lalalili;kucing123;Wakanda Blok 12
-4;Kang Dadang;dadangtheslayer;hahaha;Los Santos
-5;Cucu Ruhyat;curuhtheslayer;hahaha;Los Angeles
-6;Babeh Timur;babehneverdie;babehinibos;Srikandi No. 14
-7;Lulung;lulungtheslayer;blablabla;Dulu mah di Goa Batu
+id;username;nama;alamat;password;role
+1;admin1;admin1;-;adminkasep;admin
+2;admin2;admin2;-;admingeulis;admin
+3;lalalili;Thachalla;Wakanda Blok 12;kucing123;user
+4;dadangtheslayer;Kang Dadang;Los Santos;hahaha;user
+5;curuhtheslayer;Cucu Ruhyat;Los Angeles;hahaha;user
+6;babehneverdie;Babeh Timur;Srikandi No. 14;babehinibos;user
+7;lulungtheslayer;Lulung;Dulu mah di Goa Batu;blablabla;user
+8;catcatcat;Yuris Tana;Doggie House No. 16;kucing;user
