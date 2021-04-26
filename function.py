@@ -88,6 +88,13 @@ def idItemIsExist(id, arr1, arr2):
     else:
         return True
 
+def getIdxOfItem(id_item, arr):
+    i = 1
+    while i != (len(arr)) and id_item != arr[i][0]:
+        i += 1
+    if i != len(arr):
+        return i
+
 def addItemForm(arr1,arr2):
     id = str(input("Masukan ID: "))
     if idItemIsValid(id) == True:
@@ -107,6 +114,5 @@ def addItemForm(arr1,arr2):
     else:
         print("Gagal menambahkan item karena ID tidak valid")
         return []    
-
 
 

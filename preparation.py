@@ -48,3 +48,20 @@ def writeItemToData(arr_add, arr1, arr2):
         f = open("consumable.csv", "w")
         f.write(string_data)
         f.close()
+
+def deleteItemFromData(id_item, arr):
+    n = len(arr)
+    i = 1
+    while i != n and id_item != arr[i][0]:
+        i += 1
+    if i != n:
+        arr.pop(i)
+        string_data = convertArrayToString(arr)
+        if len(arr[0]) == 6:
+            f = open("gadget.csv", "w")
+            f.write(string_data)
+            f.close()
+        elif len(arr[0]) == 5:
+            f = open("consumable.csv", "w")
+            f.write(string_data)
+            f.close()

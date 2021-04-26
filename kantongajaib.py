@@ -23,7 +23,7 @@ if role == "admin":
     session.adminSession()
     pilihan = int(input())
     ## loop untuk membenarkan inputan user
-    while pilihan < 1 or pilihan > 4:
+    while pilihan < 1 or pilihan > 5:
         print("Input salah! Ulangi...")
         session.adminSession()
         pilihan = int(input())
@@ -50,7 +50,24 @@ if role == "admin":
             array_of_gadget = preparation.loadAndRefreshCSV("gadget.csv")
         elif len(arr_input) == 5: # kalo addnya consumable
             array_of_consumable = preparation.loadAndRefreshCSV("consumable.csv")
-            
+    ## aksi untuk menghapus item
+    elif pilihan == 5:
+        id_item = str(input("Masukan ID Item: "))
+        if function.idItemIsExist(id_item, array_of_gadget, array_of_consumable) == True:
+            if id_item[0] == 'G':
+                idx = function.getIdxOfItem(id_item, array_of_gadget)
+                aksi = str(input("Apakah anda yakin ingin menghapus " + array_of_gadget[idx][1] + " (Y/N)? "))
+                if aksi == 'Y' or aksi == 'y':
+                    preparation.deleteItemFromData(id_item, array_of_gadget)
+            else:
+                idx = function.getIdxOfItem(id_item, array_of_consumable)
+                aksi = str(input("Apakah anda yakin ingin menghapus " + array_of_consumable[idx][1] + " (Y/N)? "))
+                if aksi == 'Y' or aksi == 'y':
+                    preparation.deleteItemFromData(id_item, array_of_consumable)
+        else:
+            print("Tidak ada item dengan ID tersebut.")    
+
+
 # role sebagai user
 else:
     ## user session (memilih aksi)

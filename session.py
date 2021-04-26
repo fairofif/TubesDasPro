@@ -1,5 +1,5 @@
 def adminSession():
-    print("1. Daftarkan User\n2. Cari Item Berdasarkan Rarity\n3. Cari Item Berdasarkan Tahun")
+    print("1. Daftarkan User\n2. Cari Item Berdasarkan Rarity\n3. Cari Item Berdasarkan Tahun\n4. Menambahkan Item\n5. Menghapus Item")
 
 def userSession():
     print("1. Cari Item Berdasarkan Rarity\n2. Cari Item Berdasarkan Tahun")
