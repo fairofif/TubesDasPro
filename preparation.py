@@ -65,3 +65,23 @@ def deleteItemFromData(id_item, arr):
             f = open("consumable.csv", "w")
             f.write(string_data)
             f.close()
+
+def updateJumlahItem(jumlah, idx, arr):
+    
+    arr[idx][3] = str(int(arr[idx][3]) + jumlah)
+    
+    string_data = convertArrayToString(arr)
+    if len(arr[0]) == 6:
+        f = open("gadget.csv", "w")
+        f.write(string_data)
+        f.close()
+    elif len(arr[0]) == 5:
+        f = open("consumable.csv", "w")
+        f.write(string_data)
+        f.close()
+    if jumlah < 0:
+        print(str(jumlah * (-1)) + " " + arr[idx][1] + " berhasil dibuang. Stok sekarang: " + arr[idx][3])
+    elif jumlah > 0:
+        print(str(jumlah) + " " + arr[idx][1] + " berhasil ditambahkan. Stok sekarang: " + arr[idx][3])
+    else:
+        print("Jumlah stok " + arr[idx][1] + " tidak berubah")

@@ -28,7 +28,7 @@ def usernameIsExist(username_register, array_of_user):
     count = 0
     i = 1
     while i != n:
-        if array_of_user[i][2] == username_register:
+        if array_of_user[i][1] == username_register:
             count += 1
         i += 1
     if count == 1:
@@ -114,5 +114,34 @@ def addItemForm(arr1,arr2):
     else:
         print("Gagal menambahkan item karena ID tidak valid")
         return []    
+
+from datetime import datetime
+def DelArray(arr):
+    n = len(arr)
+    urutan=['' for i in range (n-1)]
+    for i in range(1,n):
+        urutan[i-1]=arr[i][3]
+    urutan.sort(key = lambda date: datetime.strptime(date, '%d/%m/%Y'))
+    urutan=list(dict.fromkeys(urutan))
+    k=0
+    indeks=[]
+    for i in range(n-1):
+        for j in range (1,n):
+            if k==5:
+                break
+            elif urutan[i]==arr[j][3]:
+                indeks.append(j)
+                k=k+1
+    if n>7:
+        array1=[]
+        for i in arr:
+            if i not in (arr[indeks[0]],arr[indeks[1]],arr[indeks[2]],arr[indeks[3]],arr[indeks[4]]):
+                array1.append(i)
+        arr = array1
+        return arr
+    else:
+        arr=[]
+        return arr
+
 
 
