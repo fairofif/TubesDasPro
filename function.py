@@ -116,22 +116,33 @@ def addItemForm(arr1,arr2):
         return []    
 
 from datetime import datetime
-def DelArray(arr):
+def delArray(arr):
     n = len(arr)
     urutan=['' for i in range (n-1)]
-    for i in range(1,n):
-        urutan[i-1]=arr[i][3]
+    if len(arr[0])==3:
+        for i in range(1,n):
+            urutan[i-1]=arr[i][2]
+    else:
+        for i in range(1,n):
+            urutan[i-1]=arr[i][3]
     urutan.sort(key = lambda date: datetime.strptime(date, '%d/%m/%Y'))
     urutan=list(dict.fromkeys(urutan))
-    k=0
+    jumlah=0
     indeks=[]
     for i in range(n-1):
         for j in range (1,n):
-            if k==5:
-                break
-            elif urutan[i]==arr[j][3]:
-                indeks.append(j)
-                k=k+1
+            if arr[j][2][0]=='C' or arr[j][2][0]=='G':
+                if jumlah==5:
+                    break
+                elif urutan[i]==arr[j][3]:
+                    indeks.append(j)
+                    jumlah=jumlah+1
+            else:
+                if jumlah==5:
+                    break
+                elif urutan[i]==arr[j][2]:
+                    indeks.append(j)
+                    jumlah=jumlah+1
     if n>7:
         array1=[]
         for i in arr:
@@ -143,5 +154,10 @@ def DelArray(arr):
         arr=[]
         return arr
 
-
+def getposisi(x,y,z):
+    l = len(y)
+    for i in range (1,l,1):
+        if x == y[i][z]:
+            posisi = i
+            return posisi
 

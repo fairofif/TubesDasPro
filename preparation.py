@@ -23,7 +23,7 @@ def writeUserToUserData(nama_register, username_register, password_register, ala
     array_of_user.append([str(len(array_of_user)), username_register, nama_register, alamat_register, password_register, "user"])
     string_data = convertArrayToString(array_of_user)
 
-    f = open("user.csv", "w")
+    f = open("./csv_file/user.csv", "w")
     f.write(string_data)
     f.close()
 
@@ -39,13 +39,13 @@ def writeItemToData(arr_add, arr1, arr2):
     if len(arr_add) == 6:
         arr1.append(arr_add)
         string_data = convertArrayToString(arr1)
-        f = open("gadget.csv", "w")
+        f = open("./csv_file/gadget.csv", "w")
         f.write(string_data)
         f.close()
     elif len(arr_add) == 5:
         arr2.append(arr_add)
         string_data = convertArrayToString(arr2)
-        f = open("consumable.csv", "w")
+        f = open("./csv_file/consumable.csv", "w")
         f.write(string_data)
         f.close()
 
@@ -58,11 +58,11 @@ def deleteItemFromData(id_item, arr):
         arr.pop(i)
         string_data = convertArrayToString(arr)
         if len(arr[0]) == 6:
-            f = open("gadget.csv", "w")
+            f = open("./csv_file/gadget.csv", "w")
             f.write(string_data)
             f.close()
         elif len(arr[0]) == 5:
-            f = open("consumable.csv", "w")
+            f = open("./csv_file/consumable.csv", "w")
             f.write(string_data)
             f.close()
 
@@ -72,11 +72,11 @@ def updateJumlahItem(jumlah, idx, arr):
     
     string_data = convertArrayToString(arr)
     if len(arr[0]) == 6:
-        f = open("gadget.csv", "w")
+        f = open("./csv_file/gadget.csv", "w")
         f.write(string_data)
         f.close()
     elif len(arr[0]) == 5:
-        f = open("consumable.csv", "w")
+        f = open("./csv_file/consumable.csv", "w")
         f.write(string_data)
         f.close()
     if jumlah < 0:
@@ -85,3 +85,26 @@ def updateJumlahItem(jumlah, idx, arr):
         print(str(jumlah) + " " + arr[idx][1] + " berhasil ditambahkan. Stok sekarang: " + arr[idx][3])
     else:
         print("Jumlah stok " + arr[idx][1] + " tidak berubah")
+
+def updategadgetreturn(x, y, z):
+    z[y][3] = str(int(z[y][3]) + int(x))
+    string_data = convertArrayToString(z)
+    f = open("./csv_file/gadget.csv", "w")
+    f.write(string_data)
+    f.close()
+
+def updateborrowhistory(x,y):
+    y[x][5] = "TRUE"
+    string_data = convertArrayToString(y)
+    f = open("./csv_file/gadget_borrow_history.csv", "w")
+    f.write(string_data)
+    f.close()
+
+def writeLastChangeData(list1):
+    filename = ["gadget.csv","consumable.csv","gadget_borrow_history.csv","gadget_return_history.csv","consumable_history.csv"]
+    for i in range(len(filename)):
+        locate_filename = str("./csv_file/"+filename[i])
+        string_data = convertArrayToString(list1[i])
+        f = open(locate_filename, "w")
+        f.write(string_data)
+        f.close
