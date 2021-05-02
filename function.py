@@ -103,11 +103,15 @@ def addItemForm(arr1,arr2):
             desc = str(input("Masukan Deskripsi: "))
             jumlah = int(input("Masukan Jumlah: "))
             rarity = str(input("Masukan Rarity: "))
-            if id[0] == 'G': 
-                tahun = int(input("Masukan Tahun: "))
-                return [id, nama, desc, str(jumlah), rarity, str(tahun)]
+            if rarity=='A' or rarity=='B' or rarity=='C' or rarity=='S':
+                if id[0] == 'G': 
+                    tahun = int(input("Masukan Tahun: "))
+                    return [id, nama, desc, str(jumlah), rarity, str(tahun)]
+                else:
+                    return [id, nama, desc, str(jumlah), rarity]
             else:
-                return [id, nama, desc, str(jumlah), rarity]
+                print("Input rarity tidak valid")
+                return []
         else:
             print("Gagal menambahkan item karena ID sudah ada")
             return []
@@ -118,38 +122,38 @@ def addItemForm(arr1,arr2):
 from datetime import datetime
 def delArray(arr):
     n = len(arr)
-    urutan=['' for i in range (n-1)]
-    if len(arr[0])==3:
-        for i in range(1,n):
-            urutan[i-1]=arr[i][2]
-    else:
-        for i in range(1,n):
-            urutan[i-1]=arr[i][3]
-    urutan.sort(key = lambda date: datetime.strptime(date, '%d/%m/%Y'))
-    urutan=list(dict.fromkeys(urutan))
-    jumlah=0
-    indeks=[]
-    for i in range(n-1):
-        for j in range (1,n):
-            if arr[j][2][0]=='C' or arr[j][2][0]=='G':
-                if jumlah==5:
-                    break
-                elif urutan[i]==arr[j][3]:
-                    indeks.append(j)
-                    jumlah=jumlah+1
-            else:
-                if jumlah==5:
-                    break
-                elif urutan[i]==arr[j][2]:
-                    indeks.append(j)
-                    jumlah=jumlah+1
-    if n>7:
-        array1=[]
-        for i in arr:
-            if i not in (arr[indeks[0]],arr[indeks[1]],arr[indeks[2]],arr[indeks[3]],arr[indeks[4]]):
-                array1.append(i)
-        arr = array1
-        return arr
+    if n>6:
+        urutan=['' for i in range (n-1)]
+        if len(arr[0])==3:
+            for i in range(1,n):
+                urutan[i-1]=arr[i][2]
+        else:
+            for i in range(1,n):
+                urutan[i-1]=arr[i][3]
+        urutan.sort(key = lambda date: datetime.strptime(date, '%d/%m/%Y'))
+        urutan=list(dict.fromkeys(urutan))
+        jumlah=0
+        indeks=[]
+        for i in range(n-1):
+            for j in range (1,n):
+                if arr[j][2][0]=='C' or arr[j][2][0]=='G':
+                    if jumlah==5:
+                        break
+                    elif urutan[i]==arr[j][3]:
+                        indeks.append(j)
+                        jumlah=jumlah+1
+                else:
+                    if jumlah==5:
+                        break
+                    elif urutan[i]==arr[j][2]:
+                        indeks.append(j)
+                        jumlah=jumlah+1
+            array1=[]
+            for i in arr:
+                if i not in (arr[indeks[0]],arr[indeks[1]],arr[indeks[2]],arr[indeks[3]],arr[indeks[4]]):
+                    array1.append(i)
+            arr = array1
+            return arr
     else:
         arr=[]
         return arr

@@ -1,5 +1,6 @@
 import preparation
 import function
+import os
 
 def Judul():
     print(" __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ ")
@@ -12,7 +13,6 @@ def Judul():
     print("|__ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __|")
 
 def LoadData():
-    #baru printnya aja
     print("Loading...")
     print("Memasukkan File User : user.csv")
     print("Memasukkan File Gadget : gadget.csv")
@@ -66,37 +66,33 @@ def Help(menu):
         print("================================================================")
     print()    
 
-
-def adminSession():
-    print("1. Daftarkan User\n2. Cari Item Berdasarkan Rarity\n3. Cari Item Berdasarkan Tahun\n4. Menambahkan Item\n5. Menghapus Item\n6. Mengubah Jumlah Item\n7. Riwayat Peminjaman Gadget\n8. Riwayat Pengembalian Gadget\n9. Riwayat Pengambilan Consumable")
-
-def userSession():
-    print("1. Cari Item Berdasarkan Rarity\n2. Cari Item Berdasarkan Tahun\n3. Peminjaman Gadget")
-
 def printGroup(i,arr):
-    if arr[i][0][0] == 'G':
-        print("Type Item        :  Gadget")
         print("Nama             : ", arr[i][1])
         print("Deskripsi        : ", arr[i][2])
         print("Jumlah           : ", arr[i][3], "buah")
         print("Rarity           : ", arr[i][4])
         print("Tahun Ditemukan  : ", arr[i][5])
-        print()
-    elif arr[i][0][0] == 'C':
-        print("Type Item        :  Consumable")
-        print("Nama             : ", arr[i][1])
-        print("Deskripsi        : ", arr[i][2])
-        print("Jumlah           : ", arr[i][3], "buah")
-        print("Rarity           : ", arr[i][4])
+        print("_______________________________________________")
         print()
 
 def printGroupHistory(j,k,l,arr,arr1,arr2):
-    if arr[j][2][0] =='G':
+    if arr[j][2][0] =='G' and arr[j][5]=='TRUE':
         print("ID Peminjaman       : ", arr[j][0])
         print("Nama Pengambil      : ", arr2[l][2])
         print("Nama Gadget         : ", arr1[k][1])
         print("Tanggal Peminjaman  : ", arr[j][3])
         print("Jumlah              : ", arr[j][4])
+        print("Sudah dikembalikan  :  iya")
+        print("_______________________________________________")
+        print()
+    elif arr[j][2][0] =='G' and arr[j][5]=='FALSE':
+        print("ID Peminjaman       : ", arr[j][0])
+        print("Nama Pengambil      : ", arr2[l][2])
+        print("Nama Gadget         : ", arr1[k][1])
+        print("Tanggal Peminjaman  : ", arr[j][3])
+        print("Jumlah              : ", arr[j][4])
+        print("Sudah dikembalikan  :  tidak")
+        print("_______________________________________________")
         print()
     elif arr[j][2][0] =='C':
         print("ID Pengambilan       : ", arr[j][0])
@@ -104,12 +100,14 @@ def printGroupHistory(j,k,l,arr,arr1,arr2):
         print("Nama consumable      : ", arr1[k][1])
         print("Tanggal Pengambilan  : ", arr[j][3])
         print("Jumlah               : ", arr[j][4])
+        print("_______________________________________________")
         print()
     else:
         print("ID Pengembalian       : ", arr[j][0])
         print("Nama Pengambil        : ", arr2[l][2])
         print("Nama Gadget           : ", arr1[k][1])
         print("Tanggal Pengembalian  : ", arr[j][2])
+        print("_______________________________________________")
         print()    
 
 def findGadgetByRarity(rarity, arr):
@@ -152,11 +150,11 @@ def showHistory(arr,arr1,arr2):
         for j in range (1,n):
             for k in range (1,o):
                 for l in range (1,p):
-                        if jumlah==5:
-                            break
-                        elif urutan[i]==arr[j][3] and arr1[k][0]==arr[j][2] and arr2[l][0]==arr[j][1]:
-                            printGroupHistory(j,k,l,arr,arr1,arr2)
-                            jumlah=jumlah+1
+                    if jumlah==5 or jumlah==n-1:
+                        break
+                    elif urutan[i]==arr[j][3] and arr1[k][0]==arr[j][2] and arr2[l][0]==arr[j][1]:
+                        printGroupHistory(j,k,l,arr,arr1,arr2)
+                        jumlah=jumlah+1
 
 def showReturnHistory(arr,arr1,arr2,arr3):
     n = len(arr)
@@ -174,13 +172,13 @@ def showReturnHistory(arr,arr1,arr2,arr3):
             for k in range (1,o):
                 for l in range (1,p):
                     for m in range (1,q):
-                        if jumlah==5:
+                        if jumlah==5 or jumlah==n-1:
                             break
                         elif urutan[i]==arr[j][2] and arr1[k][0]==arr[j][1] and arr2[l][0]==arr1[j][2] and arr3[m][0]==arr1[k][1]:
                             printGroupHistory(j,l,m,arr,arr2,arr3)
                             jumlah=jumlah+1
 
-def returnGadget(array_of_gadget,array_of_gadget_borrow_history,array_of_gadget_return_history,array_of_user,idx):
+def returnGadget(array_of_gadget,array_of_gadget_borrow_history,array_of_gadget_return_history,array_of_user,idx, rootbaru,folderbaru):
     print("Berikut adalah daftar gadget yang Anda harus kembalikan: ")
     l = len(array_of_gadget)
     m = len(array_of_gadget_borrow_history)
@@ -195,13 +193,13 @@ def returnGadget(array_of_gadget,array_of_gadget_borrow_history,array_of_gadget_
     belumdikembalikan = 0
 
     while flag == 0:
-        for i in range (1,m,1):
+        for i in range (m):
             if array_of_gadget_borrow_history[i][1] == array_of_user[idx][0]:
                 if array_of_gadget_borrow_history[i][5] == "FALSE":
                     no = no + 1 
                     id_borrow.append(array_of_gadget_borrow_history[i][0])
                     if no > 0:
-                        for j in range (1,l,1):
+                        for j in range (1,l):
                             if array_of_gadget_borrow_history[i][2] == array_of_gadget[j][0]:
                                 jumlahpinjam.append(array_of_gadget_borrow_history[i][4])
                                 listgadget.append(array_of_gadget[j][1])
@@ -210,6 +208,8 @@ def returnGadget(array_of_gadget,array_of_gadget_borrow_history,array_of_gadget_
                     belumdikembalikan += 1
                 elif array_of_gadget_borrow_history[i][5] == "TRUE":
                     flag = flag + 1
+            else:
+                flag=flag+1
     
     if belumdikembalikan == 0:
         print("------------------------------------------------------")
@@ -218,7 +218,7 @@ def returnGadget(array_of_gadget,array_of_gadget_borrow_history,array_of_gadget_
     else:
         while flag1 == 0:
             namagadget = input("Masukkan nama gadget yang ingin Anda kembalikan: ")
-            tanggal = input("Tanggal pengembalian: ")
+            tanggal = input("Tanggal pengembalian(dd/mm/yyyy): ")
             for i in range (no):
                 if namagadget == listgadget[i]:
                     index = i
@@ -227,12 +227,12 @@ def returnGadget(array_of_gadget,array_of_gadget_borrow_history,array_of_gadget_
                     same = same + 1
                     posisi = function.getposisi(namagadget,array_of_gadget,1)
                     posisi1 = function.getposisi(idpinjam, array_of_gadget_borrow_history, 0)
-                    preparation.updateborrowhistory(posisi1, array_of_gadget_borrow_history)
-                    preparation.updategadgetreturn(jumlah, posisi, array_of_gadget)
+                    preparation.updateborrowhistory(posisi1, array_of_gadget_borrow_history, rootbaru,folderbaru)
+                    preparation.updategadgetreturn(jumlah, posisi, array_of_gadget, rootbaru,folderbaru)
                     data_baru = [str(n), array_of_user[idx][0], tanggal]
                     array_of_gadget_return_history.append(data_baru)
                     string_data = preparation.convertArrayToString(array_of_gadget_return_history)
-                    f = open("./csv_file/gadget_return_history.csv", "w")
+                    f = open(str(rootbaru+"\\"+folderbaru+"\\"+"gadget_return_history.csv"), "w")
                     f.write(string_data)
                     f.close()
             if same > 0:
@@ -242,16 +242,15 @@ def returnGadget(array_of_gadget,array_of_gadget_borrow_history,array_of_gadget_
                 print("Anda memasukkan input yang salah")
                 flag1 = flag1 + 1
 
-def mintaConsumable(array_of_consumable, array_of_consumable_history, array_of_user, idx):
+def mintaConsumable(array_of_consumable, array_of_consumable_history, array_of_user, idx, rootbaru,folderbaru):
     n = len(array_of_consumable)
     m = len(array_of_consumable_history)
     id_item = input("Masukkan id item: ")
     
-    if function.idItemIsValid(id_item):
+    if function.idItemIsExist(id_item,array_of_consumable,array_of_consumable):
         for i in range (1,n,1):
             if id_item == array_of_consumable[i][0]:
                 posisi = i
-                break
         tanggal = input("Tanggal Peminjaman(dd/mm/yyyy): ")
         jumlah = int(input("Jumlah: "))
 
@@ -260,13 +259,13 @@ def mintaConsumable(array_of_consumable, array_of_consumable_history, array_of_u
                 print("Item " + array_of_consumable[posisi][1] + "(x" + str(jumlah) + ") telah berhasil diambil!")
                 array_of_consumable[posisi][3] = int(array_of_consumable[posisi][3]) -jumlah
                 string = preparation.convertArrayToString(array_of_consumable)
-                f = open("./csv_file/consumable.csv", "w")
+                f = open(str(rootbaru+"\\"+folderbaru+"\\"+"consumable.csv"), "w")
                 f.write(string)
                 f.close()
                 data_baru = [str(m), array_of_user[idx][0], id_item, tanggal, str(jumlah)]
                 array_of_consumable_history.append(data_baru)
                 string_data = preparation.convertArrayToString(array_of_consumable_history)
-                f = open("./csv_file/consumable_history.csv", "w")
+                f = open(str(rootbaru+"\\"+folderbaru+"\\"+"consumable_history.csv"), "w")
                 f.write(string_data)
                 f.close()
             else:
@@ -274,4 +273,34 @@ def mintaConsumable(array_of_consumable, array_of_consumable_history, array_of_u
         else:
             print("Harap masukkan jumlah dengan benar")
     else: 
-        print("ID item salah, harap masukkan id item dengan benar")
+        print("Tidak ada item dengan ID tersebut.")
+
+
+
+def save_data(x, y):    
+    string_data = ""
+    for arr_data in y: 
+        arr_data_all_string = [str(var) for var in arr_data]
+        string_data += ";".join(arr_data_all_string) 
+        string_data += "\n" 
+
+    f = open(x, mode='w')
+    f.write(string_data)
+    f.close()
+
+def save(a,b,c,d,e,f):
+    nama_folder = input("Masukkan folder untuk menyimpan data: ")
+    if os.path.exists(nama_folder) == False:
+        print("Membuat folder")
+        os.makedirs(nama_folder)
+    else:
+        print("Folder sudah tersedia")
+
+    save_data(nama_folder + '/' + "user.csv", a)
+    save_data(nama_folder + '/' + "gadget.csv", b)
+    save_data(nama_folder + '/' + "consumable.csv", c)
+    save_data(nama_folder + '/' + "gadget_borrow_history.csv", d)
+    save_data(nama_folder + '/' + "gadget_return_history.csv", e)
+    save_data(nama_folder + '/' + "consumable_history.csv", f)
+    print("Loading...")
+    print("Data telah disimpan pada folder", nama_folder)

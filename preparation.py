@@ -19,11 +19,11 @@ def loadAndRefreshCSV(csv):
         array_of_data.append(split_value)
     return array_of_data 
 
-def writeUserToUserData(nama_register, username_register, password_register, alamat_register, array_of_user):
+def writeUserToUserData(nama_register, username_register, password_register, alamat_register, array_of_user, rootbaru,folderbaru):
     array_of_user.append([str(len(array_of_user)), username_register, nama_register, alamat_register, password_register, "user"])
     string_data = convertArrayToString(array_of_user)
 
-    f = open("./csv_file/user.csv", "w")
+    f = open(str(rootbaru+"\\"+folderbaru+"\\"+"user.csv"), "w")
     f.write(string_data)
     f.close()
 
@@ -35,21 +35,21 @@ def convertArrayToString(array_of_data):
         string_data += "\n"
     return string_data
 
-def writeItemToData(arr_add, arr1, arr2):
+def writeItemToData(arr_add, arr1, arr2, rootbaru,folderbaru):
     if len(arr_add) == 6:
         arr1.append(arr_add)
         string_data = convertArrayToString(arr1)
-        f = open("./csv_file/gadget.csv", "w")
+        f = open(str(rootbaru+"\\"+folderbaru+"\\"+"gadget.csv"), "w")
         f.write(string_data)
         f.close()
     elif len(arr_add) == 5:
         arr2.append(arr_add)
         string_data = convertArrayToString(arr2)
-        f = open("./csv_file/consumable.csv", "w")
+        f = open(str(rootbaru+"\\"+folderbaru+"\\"+"consumable.csv"), "w")
         f.write(string_data)
         f.close()
 
-def deleteItemFromData(id_item, arr):
+def deleteItemFromData(id_item, arr, rootbaru,folderbaru):
     n = len(arr)
     i = 1
     while i != n and id_item != arr[i][0]:
@@ -58,25 +58,25 @@ def deleteItemFromData(id_item, arr):
         arr.pop(i)
         string_data = convertArrayToString(arr)
         if len(arr[0]) == 6:
-            f = open("./csv_file/gadget.csv", "w")
+            f = open(str(rootbaru+"\\"+folderbaru+"\\"+"gadget.csv"), "w")
             f.write(string_data)
             f.close()
         elif len(arr[0]) == 5:
-            f = open("./csv_file/consumable.csv", "w")
+            f = open(str(rootbaru+"\\"+folderbaru+"\\"+"consumable.csv"), "w")
             f.write(string_data)
             f.close()
 
-def updateJumlahItem(jumlah, idx, arr):
+def updateJumlahItem(jumlah, idx, arr, rootbaru,folderbaru):
     
     arr[idx][3] = str(int(arr[idx][3]) + jumlah)
     
     string_data = convertArrayToString(arr)
     if len(arr[0]) == 6:
-        f = open("./csv_file/gadget.csv", "w")
+        f = open(str(rootbaru+"\\"+folderbaru+"\\"+"gadget.csv"), "w")
         f.write(string_data)
         f.close()
     elif len(arr[0]) == 5:
-        f = open("./csv_file/consumable.csv", "w")
+        f = open(str(rootbaru+"\\"+folderbaru+"\\"+"consumable.csv"), "w")
         f.write(string_data)
         f.close()
     if jumlah < 0:
@@ -86,24 +86,24 @@ def updateJumlahItem(jumlah, idx, arr):
     else:
         print("Jumlah stok " + arr[idx][1] + " tidak berubah")
 
-def updategadgetreturn(x, y, z):
+def updategadgetreturn(x, y, z, rootbaru,folderbaru):
     z[y][3] = str(int(z[y][3]) + int(x))
     string_data = convertArrayToString(z)
-    f = open("./csv_file/gadget.csv", "w")
+    f = open(str(rootbaru+"\\"+folderbaru+"\\"+"gadget.csv"), "w")
     f.write(string_data)
     f.close()
 
-def updateborrowhistory(x,y):
+def updateborrowhistory(x,y, rootbaru,folderbaru):
     y[x][5] = "TRUE"
     string_data = convertArrayToString(y)
-    f = open("./csv_file/gadget_borrow_history.csv", "w")
+    f = open(str(rootbaru+"\\"+folderbaru+"\\"+"gadget_borrow_history.csv"), "w")
     f.write(string_data)
     f.close()
 
-def writeLastChangeData(list1):
+def writeLastChangeData(list1, rootbaru,folderbaru):
     filename = ["gadget.csv","consumable.csv","gadget_borrow_history.csv","gadget_return_history.csv","consumable_history.csv"]
     for i in range(len(filename)):
-        locate_filename = str("./csv_file/"+filename[i])
+        locate_filename = str(rootbaru+"\\"+folderbaru+"\\"+filename[i])
         string_data = convertArrayToString(list1[i])
         f = open(locate_filename, "w")
         f.write(string_data)
